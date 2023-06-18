@@ -5,8 +5,6 @@ Note: this software is still in active development, and as such may not have the
 A website created for the [Leyada High School](www.leyada.net) in order to manage the allocation of the laptops to the
 many students and teachers interested in using them.
 
-![Cart!](/public/assets/cart1.png "Cart")
-
 ### Background
 
 The school contains a number of movable carts, each containing about 20 laptops, along with unmovable closets which can
@@ -36,11 +34,7 @@ Necessary information is queried from the School's GSuite via Google's Admin SDK
 
 ### Ordering process
 
-Beings with a simple google sign-in process, to ensure authentication matters are adequately safe.
-
-![Login prompt](assets/1.png "Cart")
-
-following which we will be redirected differently based on whether we are a teacher or IT staff.
+Beings with a simple google sign-in process, to ensure authentication matters are adequately safe, following which we will be redirected differently based on whether we are a teacher or IT staff.
 
 The staff is immediately redirected to the current day's main matrix, which shows every slot available over a single
 day, for all the available carts (and closets). Each slot contains the name of the teacher to whom the cart is assigned
@@ -65,9 +59,9 @@ We also have the ability to edit/delete existing reservations:
 
 ![Edit reservation](https://imgur.com/afdirj0.png)
 
-Additionally, there's a simple UI to edit recurring reservations separately.
+Additionally, there's a simple UI to edit recurring reservations separately, create new ones and delete obsolete ones.
 
-![Recurring reservations](assets/1.png "Cart")
+![Recurring reservations](https://imgur.com/pomuVxW.png)
 
 On the teacher's side, we get a prompt to select the floor, and the date.
 
