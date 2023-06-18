@@ -1,0 +1,27 @@
+.reservation.charge:not(.highlight) > .reservation_inner {
+    background: grey;
+}
+
+.reservation.charge:not(.highlight) > .reservation_inner:after {
+    content: 'charging';
+}
+
+.reservation.long > .reservation_inner {
+    background: grey;
+}
+
+.reservation.long.highlight > .reservation_inner {
+    background: grey;
+}
+
+.reservation.overwritten_long > .reservation_inner {
+    background: grey;
+}
+
+.reservation.short:not(.self_reservation) > .reservation_inner {
+    background: grey;
+}
+
+.self_reservation:not(.highlight) {
+    background: lightsteelblue;
+}

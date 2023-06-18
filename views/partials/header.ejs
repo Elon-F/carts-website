@@ -1,0 +1,20 @@
+<!--hehe navbar-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <% if (typeof nav_items === 'undefined') { %>
+        <a class="navbar-brand" href="#">
+            <img src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg" width="30" height="30" alt="logo" class="rounded-circle">
+            Multimedia Services</a>
+    <% } else if (nav_items?.navbar_brand) { %>
+        <%- nav_items?.navbar_brand %>
+    <% } %>
+    <ul class="navbar-nav mr-auto">
+        <% if (typeof nav_items === 'undefined') { %>
+            <%- include('navigation/base_navbar_content'); %>
+        <% } else if (nav_items?.navbar_contents) { %>
+            <%- nav_items?.navbar_contents %>
+        <% } %>
+    </ul>
+    <ul class="navbar-nav me-auto">
+        <%- include('navigation/user_profile', {user: user}); %>
+    </ul>
+</nav>

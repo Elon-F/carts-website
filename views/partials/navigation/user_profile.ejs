@@ -1,0 +1,17 @@
+<% if (!user) { %>
+    <li class="nav-item">
+        <a class="nav-link">The future is now</a>
+    </li>
+<% } else { %>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div style="padding-right: 12px"><%= user.google.name.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()); %></div>
+            <img src="<%= pfp %>" width="35" height="35" class="rounded-circle" alt="profile picture" referrerPolicy="no-referrer">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Dashboard / Current reservations</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/logout">Log Out</a>
+        </div>
+    </li>
+<% } %>

@@ -1,0 +1,21 @@
+input[type=text] {
+  border: 2px solid green;
+  opacity: 0.5;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type=submit] {
+  border: 1px solid green;
+  background-color: whitesmoke;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type=date] {
+  border: 2px solid green;
+  opacity: 0.5;
+  border-radius: 4px;
+  outline: none;
+}
+

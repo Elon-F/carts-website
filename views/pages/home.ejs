@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Multimedia services</title>
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body <%- include('../partials/body_params'); %>>
+
+<header>
+    <%- include('../partials/header'); %>
+</header>
+
+<main>
+    <div class="container">
+        <div class="jumbotron text-center text-dark">
+            <h1>
+                ברוכים הבאים לפורטל שירותי מולטימדיה
+                <br>
+                Welcome to the Multimedia Services Portal
+            </h1>
+            <%- context ? include('../partials/error_banner') : null; %>
+<!--            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada diam non tincidunt tincidunt. Curabitur accumsan ligula eu sagittis dignissim. Maecenas commodo, tortor eu laoreet condimentum, lectus sapien condimentum diam, vitae rutrum orci eros ac ligula. In augue eros, tempus vitae nunc sed, interdum dapibus risus. Vestibulum eget scelerisque nibh. In tincidunt, ligula eget tempus sagittis, leo leo faucibus dui, nec bibendum lectus erat eu magna. Aenean vulputate neque lacus, et cursus orci maximus eget. Cras rhoncus ipsum quis magna dignissim maximus. Nulla non tortor tortor. Nulla sodales vestibulum turpis non pharetra.</p>-->
+<!--            <p> Aliquam erat volutpat. Duis sit amet interdum odio. Mauris id metus neque. Nunc convallis erat quis lectus elementum, ut lobortis nisl varius. Ut eleifend nulla neque, in convallis massa porttitor quis. Aliquam sit amet congue purus, vitae condimentum lectus. Phasellus ac sapien iaculis, vestibulum lectus vitae, pellentesque velit. Maecenas sagittis placerat justo dictum facilisis. Donec quis enim condimentum lectus maximus rutrum. Aliquam id finibus erat, ac finibus nisi. Quisque eu sem massa. Nam posuere nisl libero, vitae auctor augue auctor et. Mauris nec eros nec quam ullamcorper facilisis. </p>-->
+            <%- !user ? include('../partials/login_banner') : null; %>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
+

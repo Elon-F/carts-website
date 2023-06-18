@@ -1,0 +1,11 @@
+<li class="nav-item">
+    <a class="nav-link" href="/carts/overview">Overview</a>
+</li>
+<% if (typeof cart_levels !== "undefined") cart_levels.forEach((level) => { %>
+    <li class="nav-item">
+        <a class="nav-link" href="/carts/cart_<%= level %>">Level <%= level %></a>
+    </li>
+<% }) %>
+<li class="nav-item">
+    <a class="nav-link" href="/carts/reservations">Long-Term Reservations</a>
+</li>

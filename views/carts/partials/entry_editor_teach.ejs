@@ -1,0 +1,35 @@
+<form id="entry_editor" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); text-align: left" method="post" action="javascript:void(0);">
+    <h5 style="text-align: left"><%= (edit) ? "Edit" : "Create" %> Reservation<%= (hours) ? `${hours}` : "" %></h5>
+    <div class="d-flex align-items-center" style="justify-content: end;">
+        <div class="form-label-group mt-1 mb-1" style="">
+            <input type="text" class="form-control" id="classLocationInput" placeholder="200, Gimel 3, ..." required name="classrooms"
+                   value="<%- typeof (classrooms) === undefined ? "" : classrooms.join(",&nbsp;") %>">
+            <label for="classLocationInput">Class Location</label>
+        </div>
+    </div>
+
+    <% for (let info of infos)  { %>
+        <div class="alert alert-info mb-0" role="alert">
+            <%= info %>
+        </div>
+    <% } %>
+
+    <% for (let alert of alerts)  { %>
+        <div class="alert alert-warning mb-0" role="alert">
+            <%= alert %>
+        </div>
+    <% } %>
+    <% for (let danger of dangers)  { %>
+        <div class="alert alert-danger mb-0" role="alert">
+            <%= danger %>
+        </div>
+    <% } %>
+    <div class="mb-2" style="display: flex; justify-content: space-evenly;">
+        <% if (edit) { %>
+            <button type="button" class="btn btn-danger" onClick="deleteEntry(this)">Delete</button>
+        <% }  else { %>
+            <button type="submit" class="btn btn-primary" onClick="console.log('Button got pressed')">Reserve!</button>
+        <% } %>
+
+    </div>
+</form>

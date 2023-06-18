@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cart Reservations</title>
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet" type="text/css" href="/css/table.css">
+    <link rel="stylesheet" type="text/css" href="/css/table_simplified.css">
+    <script src="/js/carts_management_teacher_ux.js"></script>
+
+    <link href="/css/vanillacalendar.css" rel="stylesheet">
+    <script src="/js/vanillacalendar.js"></script>
+
+    <script>
+        let user_name = "<%= user.google.email %>";
+
+    </script>
+    <style>
+        .form-label-group label {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body <%- include('../partials/body_params'); %> style="font-size: 1.5rem;">
+
+<header>
+    <%- include('../partials/header', {nav_items: {navbar_brand: include('./partials/navbar_brand')}}); %>
+</header>
+
+<main>
+    <div style="align-self: center; text-align: center;">
+        <% if (displayForm) { %>
+            <div>
+                <form>
+                    <label for="level"><b>בחר/י קומה</b></label>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <div>
+                            <input type="radio" id="lvl1" name="level" value="1" required>
+                            <label for="lvl1">Floor 100&nbsp</label><br>
+                            <input type="radio" id="lvl2" name="level" value="2">
+                            <label for="lvl2">Floor 200&nbsp</label><br>
+                            <input type="radio" id="lvl3" name="level" value="3">
+                            <label for="lvl3">Floor 300&nbsp</label>
+                        </div>
+                        <div style="text-align: left">
+                            - ארונות 100/153
+                            <br>
+                            - עגלות 4, 5, 6 - קומת סייבר
+                            <br>
+                            - עגלות 1, 2, 3, ארון - קומת חדר מורים
+                        </div>
+                    </div>
+                    <label for="date" style="padding-bottom: 1rem;"><b>בחר/י תאריך</b></label>
+                    <div class="cal" id="v-cal">
+                        <div class="vcal-header">
+                            <button type="button" class="btn btn-action btn-link btn-lg" data-calendar-toggle="previous"><svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg></button>
+                            <div class="vcal-header-label" data-calendar-label="month">
+
+                            </div><button type="button" class="btn btn-action btn-link btn-lg" data-calendar-toggle="next"> <svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg></button>
+                        </div>
+                        <div class="vcal-week">
+<!--                            <span>Sun</span> <span>Mon</span> <span>Tue</span><span>Wed</span> <span>Thu</span> <span>Fri</span> <span>Sat</span>-->
+                            <span>א</span> <span>ב</span> <span>ג</span><span>ד</span> <span>ה</span> <span>ו</span> <span>ש</span>
+                        </div>
+                        <div class="vcal-body" data-calendar-area="month"></div>
+                    </div>
+                    <br>
+                    <input class="visually-hidden" type="date" name="date" id="date" style="margin-top: 1.4rem;" onClick="event.preventDefault()" required>
+                    <input type="date" id="fake_date" style="margin-top: 1.4rem; display: inline-block; pointer-events:none;" onClick="event.preventDefault()" readonly>
+                    <input type="submit" value="חפש עגלה זמינה"/>
+                    <br>
+                    <br>
+                </form>
+            </div>
+        <% } else { %>
+            <h2><%= date_str %></h2>
+            <button value="Back" onclick="window.history.go(-1); return false;">לבחירת תאריך אחר</button>
+            <%- include('partials/cart_matrix'); %>
+            <div style="margin: 20px">
+                <form action="javascript: submitMailForm();">
+                    <button type="submit">.נתקלת בבעיה או תקלה? אפשר לציין לנו אותה פה</button>
+                    <br>
+                    <textarea style="margin: 20px" name="contents"></textarea>
+                </form>
+                <!--                <a href="?">Select another date</a>-->
+            </div>
+        <% } %>
+    </div>
+
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>

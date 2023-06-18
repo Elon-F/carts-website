@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cart Long Reservation Management Interface</title>
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet" type="text/css" href="/css/table.css">
+    <style>
+        input {
+            width: 100%;
+        }
+        tr:nth-child(3n - 1) {
+            background: none;
+        }
+        tr:nth-of-type(2n) {
+            background: #F4F4F4;
+        }
+    </style>
+</head>
+<body <%- include('../partials/body_params'); %>>
+
+<header>
+    <%- include('partials/header'); %>
+</header>
+
+
+<main>
+
+<%- include('partials/longterm_list')%>
+
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!--style="display: inline-block;"-->
+<table class="table disable_selection capitalize">
+    <tr class="reduce_first">
+        <% tableData?.headers?.forEach(header => { %>
+            <th class="<%= !header ? "hour_col" : "" %>"><%= header %></th>
+        <% }) %>
+    </tr>
+    <% tableData?.contents?.forEach((row, index) => { %>
+        <tr>
+            <td class="header_col<%= row.header === "Break" ? " break_row" : "" %>"><%= row.header %></td>
+            <% row.cart_data.forEach((cart_data, i) => { %>
+                <td class="<%= tableData?.headers[i + 1]?.length > 0 ? "reservation" : "" %><%= cart_data.long ? " long" : "" %><%= cart_data.overwrittenLong ? " overwritten_long" : "" %><%= cart_data.charge ? " charge" : "" %><%= cart_data.value === user.google.email ? " self_reservation" : "" %><%= cart_data.break ? " break_row" : "" %><%= cart_data.hour_display ? " hour_cell" : "" %><%= (!!cart_data.value && !cart_data.long && !cart_data.overwrittenLong) ? " short" : "" %>"
+                <% if (!!cart_data.value) { %>
+                    data-email="<%= cart_data.value %>"
+                        <% } %>
+                >
+                    <div class="<%= tableData?.headers[i + 1]?.length > 0 ? "reservation_inner" : "" %>"><%= cart_data.displayName %></div>
+                </td>
+            <% }) %>
+        </tr>
+    <% }) %>
+</table>

@@ -1,0 +1,117 @@
+<form id="entry_editor" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); text-align: left" method="post" action="javascript:void(0);">
+    <h5 style="text-align: left"><%= (edit) ? "Edit" : "Create" %> Reservation<%= (hours) ? `${hours}` : "" %></h5>
+    <div class="form-label-group mb-1">
+        <input type="email" multiple class="form-control" id="userInput" placeholder="name@example.com; name2@example.com; ..." required name="emails"
+               autocomplete="off" autocapitalize="none" spellcheck="false"
+               value="<%- typeof (emails) === undefined ? "" : emails.join(",") %>">
+        <label for="userInput">Email address(es)</label>
+        <ul class="suggestion_list">
+
+        </ul>
+    </div>
+    <div class="d-flex align-items-center" style="justify-content: end;">
+        <div class="form-label-group mt-1 mb-1" style="width: 50%;  align-self: end;">
+            <input type="text" class="form-control" id="classLocationInput" placeholder="200, Gimel 3, ..." required name="classrooms"
+                   value="<%- typeof (classrooms) === undefined ? "" : classrooms.join(",&nbsp;") %>">
+            <label for="classLocationInput">Class Location</label>
+        </div>
+    </div>
+
+    <% for (let info of infos)  { %>
+        <div class="alert alert-info mb-0" role="alert">
+            <%= info %>
+        </div>
+    <% } %>
+
+    <% for (let alert of alerts)  { %>
+        <div class="alert alert-warning mb-0" role="alert">
+            <%= alert %>
+        </div>
+    <% } %>
+    <% for (let danger of dangers)  { %>
+        <div class="alert alert-danger mb-0" role="alert">
+            <%= danger %>
+        </div>
+    <% } %>
+
+    <% if (edit) { %>
+        <div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="cartBadReturnCheckbox" <%= ("bad_return" in checkboxes) ? "checked" : "" %> name="checkbox.bad_return">
+                <label class="form-check-label" for="cartBadReturnCheckbox">Improperly returned</label>
+            </div>
+            <div>
+                <input type="text" class="form-control mb-1" id="cartBadReturnText"
+                <% if (checkboxes["bad_return"] ?? "" !== "") { %> value="<%= checkboxes["bad_return"] %>"
+                        <% } %>
+                       name="checkbox.bad_return">
+                <label for="cartBadReturnText" class="visually-hidden">Cart Bad Return Input</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" <%= ("missing_laptop" in checkboxes) ? "checked" : "" %> id="missingLaptopCheckbox" name="checkbox.missing_laptop">
+                <label class="form-check-label" for="missingLaptopCheckbox">Missing Laptop</label>
+            </div>
+            <div>
+                <input type="text" class="form-control mb-1" id="missingLaptopText"
+                <% if (checkboxes["missing_laptop"] ?? "" !== "") { %> value="<%= checkboxes["missing_laptop"] %>"
+                        <% } %>
+                       name="checkbox.missing_laptop">
+                <label for="missingLaptopText" class="visually-hidden">Cart Bad Return Input</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" <%= ("broken_laptop" in checkboxes) ? "checked" : "" %> id="brokenLaptopCheckbox" name="checkbox.broken_laptop">
+                <label class="form-check-label" for="brokenLaptopCheckbox">Broken Laptop</label>
+            </div>
+            <div>
+                <input type="text" class="form-control mb-1" id="brokenLaptopText"
+                <% if (checkboxes["broken_laptop"] ?? "" !== "") { %> value="<%= checkboxes["broken_laptop"] %>"
+                        <% } %>
+                       name="checkbox.broken_laptop">
+                <label for="brokenLaptopText" class="visually-hidden">Cart Bad Return Input</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" <%= ("missing_lock" in checkboxes) ? "checked" : "" %> id="missingLockCheckbox" name="checkbox.missing_lock">
+                <label class="form-check-label" for="missingLockCheckbox">Missing Lock</label>
+            </div>
+            <div>
+                <input type="text" class="form-control mb-1" id="missingLockText"
+                <% if (checkboxes["missing_lock"] ?? "" !== "") { %> value="<%= checkboxes["missing_lock"] %>"
+                        <% } %>
+                       name="checkbox.missing_lock">
+                <label for="missingLockText" class="visually-hidden">Cart Bad Return Input</label>
+            </div>
+        </div>
+
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" <%= (!!checkboxes.unused) ? "checked" : "" %> id="cartUnusedCheckbox" name="checkbox.unused">
+            <label class="form-check-label" for="cartUnusedCheckbox">Unused</label>
+        </div>
+        <div>
+            <!--            placeholder for toggle-->
+        </div>
+    <% } %>
+
+    <div class="mb-3" style="display:flex; flex-direction: column;">
+        <label for="notes" class="form-label mb-1">Notes</label>
+        <textarea class="form-control" rows="3" placeholder="Notes" id="notes" name="notes"><%- typeof (notes) === undefined ? "" : notes.join(";\n") %></textarea>
+    </div>
+
+    <% if (edit) { %>
+        <!--        <div class="custom-file mb-3" style="text-align: left; overflow:hidden;">-->
+        <!--            <input type="file" class="custom-file-input" id="customFile" name="evidence_file">-->
+        <!--            <label class="custom-file-label" for="customFile">Choose file</label>-->
+        <!--        </div>-->
+    <% } %>
+    <div class="mb-2" style="display: flex; justify-content: space-evenly;">
+        <button type="submit" class="btn btn-primary" onClick="console.log('Button got pressed')">Save</button>
+
+        <% if (edit) { %>
+            <button type="button" class="btn btn-danger" onClick="deleteEntry(this)">Delete</button>
+        <% } %>
+
+        <button type="reset" class="btn btn-secondary" onClick="selectedElements.clear()">Cancel</button>
+    </div>
+</form>

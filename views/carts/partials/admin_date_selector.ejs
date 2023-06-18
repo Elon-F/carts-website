@@ -1,0 +1,146 @@
+<script>
+    window.onload = () => {
+        let button = document.getElementById('slideRight');
+        button.onclick = function () {
+            let container = document.getElementById('week_selector');
+            sideScroll(container, 'right', 1, 500, 20);
+        };
+
+        let back = document.getElementById('slideLeft');
+        back.onclick = function () {
+            let container = document.getElementById('week_selector');
+            sideScroll(container, 'left', 1, 500, 20);
+        };
+
+        let matrices = $("#cart_matrices");
+        let week_selector = $("#week_selector");
+
+        $(".nav.nav-pills>.nav-item>.nav-link").click(e => {
+            e.preventDefault();
+            let dt = e.target.getAttribute("data-target")
+            let date = dt.split('_')[1];
+            let elem = $(`${dt}`);
+            selectedElements.divID = `matrix_${date}`
+            selectedElements.currDate = date
+            if (elem.length === 0) {
+                e.stopPropagation();
+                let loading_bar = $("<h1>Loading!</h1>")
+                week_selector.after(loading_bar);
+
+                fetch('/carts/render_carts_matrix', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({date: date}), // retrieves the date (ISO order).
+                }).then(async response => {
+                    let matrix = response.text()
+                    let cool_new_tab = `
+                        <div class="tab-pane fade" id="matrix_${date}" role="tabpanel">
+                        ${await matrix}
+                        <br>
+                        <br>
+                        </div>`
+                    matrices.append(cool_new_tab)
+                }).then(() => {
+                    loading_bar.remove();
+                    setTimeout(() => $(`#matrix_${date}_delete`).remove(), 1000);
+                    e.target.click();
+                    $(`#matrix_${date} td.reservation`).on("mousedown", e => {
+                        if (e.button !== 0 || !e.target.classList.contains("reservation_inner")) return;
+                        isDragging = true;
+                        selectedElements.setFirst(e.currentTarget);
+                        selectedElements.setLast(e.currentTarget);
+                    }).on("mouseup", e => {
+                        if (e.button !== 0 || !isDragging) return;
+                        isDragging = false;
+                        selectedElements.setLast(e.currentTarget)
+                        showEntryEditor($(selectedElements.start).find(".reservation_inner")[0])
+                    }).on("mouseenter", e => {
+                        if (isDragging) {
+                            selectedElements.setLast(e.currentTarget)
+                        }
+                    })
+                });
+            }
+        })
+
+        const source = new EventSource('/carts/events', {withCredentials: true});
+
+        source.addEventListener('refresh', message => {
+            if (IGNORE_REFRESH) return;
+            let date = message.data;
+            console.log("message", date === "ALL")
+            if (date === "ALL") {
+                let date_button = $(`button.nav-link.active`)
+                // first, we want to grab the current date
+                date = date_button.attr('id').split('_')[1]
+                // then, we delete all matrices except the currently selected one, which we leave for the refresh
+                let matrices = $(`#cart_matrices>:not(#matrix_${date})`);
+                matrices.remove()
+            }
+            let matrix = $(`#matrix_${date}`);
+            let deleted_matrix = $(`#matrix_${date}_delete`);
+            if (matrix.length === 0) return;
+            // first ensure there are no existing matrices
+            deleted_matrix.remove()
+            // then slate matrix for deletion
+            matrix.attr("id", `matrix_${date}_delete`);
+            // re-press button
+            let button = $(`[data-target="#matrix_${date}"]`);
+            console.log("Button value", button)
+            if (button.hasClass("active")) {
+                console.log("Button pressed hopefully")
+                button.removeClass("active").click();
+            }
+            console.log(`Refreshed ${date} due to event.`)
+        });
+
+
+        $(`button.nav-link#pills_${new Date().toLocaleString("fr-CA", {year: "numeric", month: "2-digit", day: "2-digit",})}`).first().trigger("click");
+        $('#week_selector').scrollLeft($('#week_selector> :nth-child(13)')[0].offsetLeft - 16);
+        // $('#myTab li:first-child button').tab('show') // Select first tab
+    }
+
+    function sideScroll(element, direction, speed, distance, step) {
+        scrollAmount = 0;
+        let slideTimer = setInterval(function () {
+            if (direction === 'left') {
+                element.scrollLeft -= step;
+            } else {
+                element.scrollLeft += step;
+            }
+            scrollAmount += step;
+            if (scrollAmount >= distance) {
+                window.clearInterval(slideTimer);
+            }
+        }, speed);
+    }
+</script>
+<div>
+    <ul class="nav nav-pills mb-1 mt-1" id="week_selector" role="tablist">
+        <% for (let i = 0; i < date_selector_count; i++) { %>
+            <% if (i % 7 === 5) { %>
+                <% let curr_date = new Date(startDate.valueOf() + du.DAY_MS * (i - 14)); %>
+                <li class="nav-item" role="presentation" style="justify-content: center">
+                    <button class="nav-link disabled" id="pills_weekend<%= du.getDateForInputField(curr_date) %>" type="button" role="tab"><%= "Weekend!" %></button>
+                </li>
+                <% i += 2; %>
+            <% } %>
+            <% let curr_date = new Date(startDate.valueOf() + du.DAY_MS * (i - 14)); %>
+            <% days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills_<%= du.getDateForInputField(curr_date) %>" data-toggle="pill" data-target="#matrix_<%= du.getDateForInputField(curr_date) %>" type="button"
+                        role="tab"><%= days[curr_date.getDay()] %> <%= du.getAsDateString(curr_date) %></button>
+            </li>
+        <% } %>
+    </ul>
+    <button id="slideLeft" type="button">←</button>
+    <button id="slideRight" type="button">→</button>
+</div>
+
+<div class="tab-content" id="cart_matrices">
+    <% for (let td of tableData) { %>
+        <div class="tab-pane fade" id="matrix_<%= td.date_formatted %>" role="tabpanel">
+            <%- include('cart_matrix', {tableData: td}); %>
+            <br>
+            <br>
+        </div>
+    <% } %>
+</div>
